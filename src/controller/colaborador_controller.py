@@ -1,5 +1,7 @@
 
 from flask import Blueprint, request, jsonify
+from src.model.colaborador_model import Colaborador
+from src.model import db
 
 # request -> trabalha com as requisições. Pega o conteúdo da requisição
 # jsonify -> Trabalha com as respostas. Converte um dado em Json
@@ -24,14 +26,17 @@ def cadastrar_novo_colaborador():
     
     dados_requisicao = request.get_json() 
     
-    novo_colaborador = {
-        'id': len(dados) + 1,
-        'nome': dados_requisicao['nome'],
-        'cargo': dados_requisicao['cargo'],
-        'cracha': dados_requisicao['cracha']
-    } 
+    novo_colaborador = Colaborador(
+        nome=dados_requisicao['nome'], # Pegue do json o valor relacionado a chave nome
+        email=dados_requisicao['email'],
+        senha=dados_requisicao['senha'],
+        cargo=dados_requisicao['cargo'],
+        salario=dados_requisicao['salario']
+    )
     
-    dados.append(novo_colaborador)
+#   INSERT INTO tb_colaborador (nome, email, senha, cargo, salario) VALUES (VALOR1,VALOR2,VALOR3,VALOR4,VALOR5)
+    db.session.add(novo_colaborador)
+    db.session.commit() # Essa linha executa a query
     
     return jsonify( {'mensagem': 'Dado cadastrado com sucesso'} ), 201
 
