@@ -1,0 +1,39 @@
+tags:
+  - Colaborador
+description: Endpoint para cadastrar um novo colaborador
+
+parameters:
+  - in: body
+    name: corpo # Referencia ao body da requisicao
+    required: true
+    schema: 
+      type: object
+      properties:
+        nome:
+          type: string
+          example: Joao da silva fredericksen almeida
+        email:
+          type: string
+          example: jojo@email.com
+        senha:
+          type: string
+          example: senha123
+        cargo:
+          type: string
+          example: QA
+        salario: 
+          type: number
+          example: 2500.78
+      required:
+        - nome
+        - email
+        - senha
+        - cargo
+        - salario
+responses:
+  201:
+    description: Colaborador cadastrado com sucesso
+  400:
+    description: Erro ao cadastrar colaborador 
+  401:
+    description: Usuario não autorizado 
